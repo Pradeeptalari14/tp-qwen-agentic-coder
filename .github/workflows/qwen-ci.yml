@@ -1,0 +1,27 @@
+name: Qwen Coder Agent CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install openai pytest flake8
+      - name: Lint and syntax check
+        run: |
+          python -m py_compile qwen_coder_agent.py
+          flake8 qwen_coder_agent.py --max-line-length=120 --ignore=E501,W503
+      - name: Validate scripts
+        run: |
+          bash scripts/validate.sh --dry-run

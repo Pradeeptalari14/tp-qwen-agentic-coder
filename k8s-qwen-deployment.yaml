@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qwen-coder-32b
+  namespace: ai-serving
+  labels:
+    app: qwen-coder-32b
+    tier: inference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qwen-coder-32b
+  template:
+    metadata:
+      labels:
+        app: qwen-coder-32b
+    spec:
+      containers:
+        - name: vllm-engine
+          image: ghcr.io/pradeeptalari14/qwen-coder-32b:latest
+          command: ["bash", "vllm_qwen_serving.sh"]
+          resources:
+            limits:
+              nvidia.com/gpu: "1"
+              memory: 32Gi
+              cpu: "8"
+            requests:
+              nvidia.com/gpu: "1"
+              memory: 16Gi
+              cpu: "4"
+          ports:
+            - containerPort: 8000
+              name: http-api
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 45
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qwen-coder-service
+  namespace: ai-serving
+spec:
+  selector:
+    app: qwen-coder-32b
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: ClusterIP
