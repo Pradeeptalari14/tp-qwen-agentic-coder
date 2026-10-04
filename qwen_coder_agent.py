@@ -8,12 +8,13 @@ import ast
 import json
 import os
 import subprocess
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 from openai import OpenAI
+
 
 class QwenCoderAgent:
     """Enterprise Autonomous Coding Agent powered by Qwen2.5-Coder-32B."""
-    
+
     def __init__(
         self,
         base_url: str = "http://localhost:8000/v1",
@@ -44,7 +45,7 @@ class QwenCoderAgent:
                 ast.parse(content)
             except SyntaxError as e:
                 return f"AST Validation Error: Invalid Python syntax at line {e.lineno}: {e.msg}"
-        
+
         os.makedirs(os.path.dirname(full_path), exist_ok=True)
         with open(full_path, "w", encoding="utf-8") as f:
             f.write(content)
@@ -143,7 +144,7 @@ class QwenCoderAgent:
             for tool_call in msg.tool_calls:
                 fn_name = tool_call.function.name
                 args = json.loads(tool_call.function.arguments)
-                
+
                 if fn_name == "tool_read_file":
                     result = self.tool_read_file(args.get("file_path"))
                 elif fn_name == "tool_write_file":
@@ -160,6 +161,7 @@ class QwenCoderAgent:
                 })
 
         return {"status": "turn_limit_reached", "total_turns": self.max_turns}
+
 
 if __name__ == "__main__":
     agent = QwenCoderAgent()
