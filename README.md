@@ -1,3 +1,6 @@
+[![Ecosystem](https://img.shields.io/badge/Portfolio%20Ecosystem-341%20Studios-6366f1.svg)](https://pradeeptalari.me/projects/)
+[![Architecture DAG](https://img.shields.io/badge/Architecture-DAG%20%26%20Course-10b981.svg)](https://pradeeptalari.me/tools/repo-learning/)
+
 # 💻 Qwen2.5-Coder-32B: Enterprise Agentic Coding Engine
 
 [![Qwen Coder CI](https://github.com/Pradeeptalari14/tp-qwen-agentic-coder/actions/workflows/qwen-ci.yml/badge.svg)](https://github.com/Pradeeptalari14/tp-qwen-agentic-coder/actions)
@@ -190,3 +193,6 @@ When running 128k context windows, configure vLLM with `--gpu-memory-utilization
 
 ## 📄 License
 This repository is licensed under the [MIT License](LICENSE).
+
+---
+*Synchronized with [Qwen2.5-Coder-32B Enterprise Agentic Coding Studio Studio](https://pradeeptalari.me/tools/qwen-agentic-coder/) & [Repository Learning DAG](https://pradeeptalari.me/tools/repo-learning/) — [Talari Pradeep Portfolio](https://pradeeptalari.me)*
